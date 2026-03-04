@@ -115,6 +115,9 @@ if [ -n "${SRCDS_APPID}" ] && [ "${SRCDS_STOP_UPDATE:-0}" -eq 0 ]; then
     fi
 
     echo "4465480" > "/home/container/steam_appid.txt"
+    if [ -d "/home/container/bin" ]; then
+        echo "4465480" > "/home/container/bin/steam_appid.txt"
+    fi
     log_message "Patched steam_appid.txt" "info"
 
     if [ -f "/home/container/csgo/steam.inf" ]; then

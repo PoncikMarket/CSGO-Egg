@@ -450,6 +450,9 @@ update_csgo() {
     fi
 
     echo "4465480" > "$CS2_DIR/steam_appid.txt"
+    if [ -d "$CS2_DIR/bin" ]; then
+        echo "4465480" > "$CS2_DIR/bin/steam_appid.txt"
+    fi
     log_info "Patched steam_appid.txt"
 
     if [ -f "$CS2_DIR/csgo/steam.inf" ]; then
