@@ -10,8 +10,8 @@
   "description": "The SteamRT3 Platform image for Pterodactyl CS:GO servers is packed with numerous features, designed to simplify server management and reduce hassle.",
   "features": [],
   "docker_images": {
-    "KitsuneLab CSGO - GitHub - Unlimited": "ghcr.io/k4ryuu/csgo-egg:latest",
-    "KitsuneLab CSGO Beta - GitHub - Unlimited": "ghcr.io/k4ryuu/csgo-egg:beta",
+    "PoncikMarket CSGO - GitHub - Unlimited": "ghcr.io/poncikmarket/csgo-egg:latest",
+    "PoncikMarket CSGO Beta - GitHub - Unlimited": "ghcr.io/poncikmarket/csgo-egg:beta",
     "KitsuneLab CSGO - DockerHub - Limited": "docker.io/sples1/k4ryuu-csgo:latest",
     "KitsuneLab CSGO Beta - DockerHub - Limited": "docker.io/sples1/k4ryuu-csgo:beta"
   },
