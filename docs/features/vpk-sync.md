@@ -101,8 +101,8 @@ Download the script:
 
 ```bash
 cd /root
-curl -O https://raw.githubusercontent.com/K4ryuu/CS2-Egg/refs/heads/main/misc/update-cs2-centralized.sh
-chmod +x update-cs2-centralized.sh
+curl -O https://raw.githubusercontent.com/PoncikMarket/CSGO-Egg/refs/heads/main/misc/update-csgo-centralized.sh
+chmod +x update-csgo-centralized.sh
 ```
 
 Edit configuration at the top of the script:
