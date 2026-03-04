@@ -12,13 +12,13 @@ update_metamod() {
         log_message "Installing Metamod..." "info"
     fi
 
-    local metamod_version=$(curl -sL https://mms.alliedmods.net/mmsdrop/2.0/ | grep -o 'href="mmsource-[^"]*-linux\.tar\.gz' | sed 's/href="//' | tail -1)
+    local metamod_version=$(curl -sL https://mms.alliedmods.net/mmsdrop/1.12/ | grep -o 'href="mmsource-[^"]*-linux\.tar\.gz' | sed 's/href="//' | tail -1)
     if [ -z "$metamod_version" ]; then
         log_message "Failed to fetch the Metamod version" "error"
         return 1
     fi
 
-    local full_url="https://mms.alliedmods.net/mmsdrop/2.0/$metamod_version"
+    local full_url="https://mms.alliedmods.net/mmsdrop/1.12/$metamod_version"
     local new_version=$(echo "$metamod_version" | grep -o 'git[0-9]\+')
     local current_version=$(get_current_version "Metamod")
 

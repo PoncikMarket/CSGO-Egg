@@ -108,6 +108,20 @@ if [ -n "${SRCDS_APPID}" ] && [ "${SRCDS_STOP_UPDATE:-0}" -eq 0 ]; then
         log_message "SteamCMD failed with exit code $STEAM_EXIT_CODE" "error"
     fi
 
+    # Post-update patches for CS:GO (740 to 4465480 spoofing)
+    if [ -f "/home/container/bin/libgcc_s.so.1" ]; then
+        log_message "Removing conflicting libgcc_s.so.1..." "info"
+        rm -f "/home/container/bin/libgcc_s.so.1"
+    fi
+
+    echo "4465480" > "/home/container/steam_appid.txt"
+    log_message "Patched steam_appid.txt" "info"
+
+    if [ -f "/home/container/csgo/steam.inf" ]; then
+        sed -i 's/^appID=.*/appID=4465480/' "/home/container/csgo/steam.inf"
+        log_message "Patched steam.inf with appID 4465480" "info"
+    fi
+
     # Update steamclient.so files
     cp -f ./steamcmd/linux32/steamclient.so ./.steam/sdk32/steamclient.so
     cp -f ./steamcmd/linux64/steamclient.so ./.steam/sdk64/steamclient.so

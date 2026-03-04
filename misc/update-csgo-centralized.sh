@@ -15,7 +15,7 @@ set -euo pipefail
 # ============================================================================
 
 # Required: CS:GO App ID (don't change unless you know what you're doing)
-APP_ID="730"
+APP_ID="740"
 
 # Required: Path where centralized CS:GO files are stored
 CS2_DIR="/srv/csgo-shared"
@@ -441,6 +441,20 @@ update_csgo() {
         "$STEAMCMD_DIR/steamcmd.sh" +force_install_dir "$CS2_DIR" +login anonymous +app_update "$APP_ID" $validate_flag +quit; then
         log_error "CS:GO update failed"
         exit 1
+    fi
+
+    # Post-update patches for CS:GO (740 to 4465480 spoofing)
+    if [ -f "$CS2_DIR/bin/libgcc_s.so.1" ]; then
+        log_info "Removing conflicting libgcc_s.so.1..."
+        rm -f "$CS2_DIR/bin/libgcc_s.so.1"
+    fi
+
+    echo "4465480" > "$CS2_DIR/steam_appid.txt"
+    log_info "Patched steam_appid.txt"
+
+    if [ -f "$CS2_DIR/csgo/steam.inf" ]; then
+        sed -i 's/^appID=.*/appID=4465480/' "$CS2_DIR/csgo/steam.inf"
+        log_info "Patched steam.inf with appID 4465480"
     fi
 
     local version_after=$(get_local_version)
