@@ -119,11 +119,11 @@ nano update-cs2-centralized.sh
 # ============================================================================
 
 # Required: CS2 App ID (don't change unless you know what you're doing)
-APP_ID="730"
+APP_ID="740"
 
 # Required: Path where centralized CS2 files are stored
 # This must match the path you configured in Pterodactyl mounts
-CS2_DIR="/srv/cs2-shared"
+CS2_DIR="/srv/csgo-shared"
 
 # Required: SteamCMD installation directory
 STEAMCMD_DIR="/root/steamcmd"
