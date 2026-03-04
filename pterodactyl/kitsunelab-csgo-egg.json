@@ -215,10 +215,10 @@
       "name": "Tickrate",
       "description": "The tickrate for the server. Higher tickrate means smoother gameplay but requires more CPU power. 128 is recommended for competitive servers.",
       "env_variable": "TICKRATE",
-      "default_value": "128",
+      "default_value": "64",
       "user_viewable": true,
       "user_editable": true,
-      "rules": "required|numeric",
+      "rules": "required|numeric|in:64,128",
       "field_type": "text"
     }
   ]
