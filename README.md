@@ -1,9 +1,9 @@
 <a name="readme-top"></a>
  
-![GitHub Repo stars](https://img.shields.io/github/stars/K4ryuu/CS2-Egg?style=for-the-badge)
-![GitHub issues](https://img.shields.io/github/issues/K4ryuu/CS2-Egg?style=for-the-badge)
-![GitHub](https://img.shields.io/github/license/K4ryuu/CS2-Egg?style=for-the-badge)
-![Docker Pulls](https://img.shields.io/docker/pulls/sples1/k4ryuu-cs2?style=for-the-badge&logo=docker&logoColor=white)
+![GitHub Repo stars](https://img.shields.io/github/stars/K4ryuu/CSGO-Egg?style=for-the-badge)
+![GitHub issues](https://img.shields.io/github/issues/K4ryuu/CSGO-Egg?style=for-the-badge)
+![GitHub](https://img.shields.io/github/license/K4ryuu/CSGO-Egg?style=for-the-badge)
+![Docker Pulls](https://img.shields.io/docker/pulls/sples1/k4ryuu-csgo?style=for-the-badge&logo=docker&logoColor=white)
 ![GHCR Pulls](https://img.shields.io/badge/GHCR_Pulls-Unlimited-2088FF?style=for-the-badge&logo=github&logoColor=white)
 [![Discord](https://img.shields.io/badge/Discord-Join%20Server-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://dsc.gg/k4-fanbase)
 
@@ -15,16 +15,16 @@
 <br />
 <div align="center">
   <h1 align="center">KitsuneLab©</h1>
-  <h3 align="center">CS2 Egg</h3>
-  <a align="center">Production-ready CS2 Pterodactyl Egg with automated updates, intelligent cleanup, auto-restart on game updates, and advanced configuration management.</a>
+  <h3 align="center">CS:GO Egg</h3>
+  <a align="center">Production-ready CS:GO Pterodactyl Egg with automated updates, intelligent cleanup, auto-restart on game updates, and advanced configuration management.</a>
 
   <p align="center">
     <br />
-    <a href="https://github.com/K4ryuu/CS2-Egg/blob/main/pterodactyl/kitsunelab-cs2-egg.json">Download</a>
+    <a href="https://github.com/K4ryuu/CSGO-Egg/blob/main/pterodactyl/kitsunelab-csgo-egg.json">Download</a>
     ·
-    <a href="https://github.com/K4ryuu/CS2-Egg/issues/new?assignees=KitsuneLab-Development&labels=bug&projects=&template=bug_report.md&title=%5BBUG%5D">Report Bug</a>
+    <a href="https://github.com/K4ryuu/CSGO-Egg/issues/new?assignees=KitsuneLab-Development&labels=bug&projects=&template=bug_report.md&title=%5BBUG%5D">Report Bug</a>
     ·
-    <a href="https://github.com/K4ryuu/CS2-Egg/issues/new?assignees=KitsuneLab-Development&labels=enhancement&projects=&template=feature_request.md&title=%5BREQ%5D">Request Feature</a>
+    <a href="https://github.com/K4ryuu/CSGO-Egg/issues/new?assignees=KitsuneLab-Development&labels=enhancement&projects=&template=feature_request.md&title=%5BREQ%5D">Request Feature</a>
     ·
     <a href="https://dsc.gg/k4-fanbase">Discord</a>
     ·
@@ -83,7 +83,7 @@ Each framework can be enabled/disabled independently via Pterodactyl panel. Auto
 ### Automation & Updates
 
 - **Auto-Updaters** → MetaMod, CounterStrikeSharp, SwiftlyS2, ModSharp automatically update on server restart
-- **[Centralized Update Script](docs/features/vpk-sync.md)** → Auto-restart on CS2 updates with version tracking (misc/update-cs2-centralized.sh)
+- **[Centralized Update Script](docs/features/vpk-sync.md)** → Auto-restart on CS:GO updates with version tracking (misc/update-csgo-centralized.sh)
 
 ### Storage & Performance
 
@@ -92,7 +92,7 @@ Each framework can be enabled/disabled independently via Pterodactyl panel. Auto
 
 ### Management & Configuration
 
-- **Console Filter** → Block unwanted messages (inspired by [Poggu](https://github.com/Poggicek)'s [CleanerCS2](https://github.com/Source2ZE/CleanerCS2))
+- **Console Filter** → Block unwanted messages
 - **JSON Configs** → FTP-editable configuration files
 - **Colored Logging** → Enhanced console output
 - **Custom Parameters** → Safe user-configurable startup options
@@ -112,7 +112,7 @@ Comprehensive documentation is available:
 
 ### Features
 
-- **[VPK Sync & Centralized Updates](docs/features/vpk-sync.md)** → 80% storage savings + auto-restart on CS2 updates
+- **[VPK Sync & Centralized Updates](docs/features/vpk-sync.md)** → 80% storage savings + auto-restart on CS:GO updates
 - **[Auto-Updaters](docs/features/auto-updaters.md)** → Plugin auto-updates (MetaMod, CSS, SwiftlyS2, ModSharp)
 - **[Console Filter](docs/features/console-filter.md)** → Message filtering
 - **[Junk Cleaner](docs/features/junk-cleaner.md)** → Automatic cleanup
@@ -138,7 +138,7 @@ Build your own Docker image using the included build script:
 ./build.sh latest --publish
 ```
 
-**Note:** Edit `build.sh` to change the registry from `sples1/k4ryuu-cs2` to your own.
+**Note:** Edit `build.sh` to change the registry from `sples1/k4ryuu-csgo` to your own.
 
 **[Full Building Guide →](docs/advanced/building.md)** - Customization, multi-arch builds, CI/CD integration
 

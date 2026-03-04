@@ -1,9 +1,9 @@
 #!/bin/bash
-# KitsuneLab CS2 Centralized Update Script
-# Automatically updates CS2 files and optionally restarts all affected servers
+# KitsuneLab CS:GO Centralized Update Script
+# Automatically updates CS:GO files and optionally restarts all affected servers
 # Designed for use with VPK Sync feature
 #
-# Usage: ./update-cs2-centralized.sh [--simulate]
+# Usage: ./update-csgo-centralized.sh [--simulate]
 #   --simulate    Skip SteamCMD update, simulate update and trigger restart logic
 #
 # Version: 1.0.21
@@ -14,12 +14,11 @@ set -euo pipefail
 # CONFIGURATION - Edit these values for your setup
 # ============================================================================
 
-# Required: CS2 App ID (don't change unless you know what you're doing)
+# Required: CS:GO App ID (don't change unless you know what you're doing)
 APP_ID="730"
 
-# Required: Path where centralized CS2 files are stored
-# This must match the path you configured in Pterodactyl mounts
-CS2_DIR="/srv/cs2-shared"
+# Required: Path where centralized CS:GO files are stored
+CS2_DIR="/srv/csgo-shared"
 
 # Required: SteamCMD installation directory
 STEAMCMD_DIR="/root/steamcmd"
@@ -28,10 +27,10 @@ STEAMCMD_DIR="/root/steamcmd"
 # Servers using these images will be automatically restarted after update
 # Supports multiple images separated by spaces or commas
 # Examples:
-#   Single: "sples1/k4ryuu-cs2"
-#   Multiple: "sples1/k4ryuu-cs2 ghcr.io/k4ryuu/cs2-egg"
-#   With commas: "sples1/k4ryuu-cs2,ghcr.io/k4ryuu/cs2-egg"
-SERVER_IMAGE="sples1/k4ryuu-cs2 ghcr.io/k4ryuu/cs2-egg"
+#   Single: "sples1/k4ryuu-csgo"
+#   Multiple: "sples1/k4ryuu-csgo ghcr.io/k4ryuu/csgo-egg"
+#   With commas: "sples1/k4ryuu-csgo,ghcr.io/k4ryuu/csgo-egg"
+SERVER_IMAGE="sples1/k4ryuu-csgo ghcr.io/k4ryuu/csgo-egg"
 
 # Optional: Enable automatic server restart after update (true/false)
 # Set to "false" if you want servers to sync on next manual restart
@@ -66,13 +65,13 @@ ORIGINAL_ARGS=("$@")
 # ============================================================================
 
 # Self-update configuration (internal)
-GITHUB_REPO="K4ryuu/CS2-Egg"
+GITHUB_REPO="K4ryuu/CSGO-Egg"
 GITHUB_BRANCH="main"
-SCRIPT_FILENAME="update-cs2-centralized.sh"
+SCRIPT_FILENAME="update-csgo-centralized.sh"
 REMOTE_SCRIPT_URL="https://raw.githubusercontent.com/${GITHUB_REPO}/${GITHUB_BRANCH}/misc/${SCRIPT_FILENAME}"
 
 # Update tracking files
-UPDATE_CHECK_TIMESTAMP_FILE="/var/cache/cs2-update-script-check"
+UPDATE_CHECK_TIMESTAMP_FILE="/var/cache/csgo-update-script-check"
 UPDATE_BACKUP_DIR="$(dirname "$0")/.script-backups"
 UPDATE_KEEP_BACKUPS=3
 
@@ -110,7 +109,7 @@ validate_config() {
 
     # Validate CS2_DIR path (must be absolute, no special chars except /-_)
     if [[ ! "$CS2_DIR" =~ ^/[a-zA-Z0-9/_-]+$ ]]; then
-        log_error "Invalid CS2_DIR path: $CS2_DIR"
+        log_error "Invalid shared DIR path: $CS2_DIR"
         log_error "Path must be absolute and contain only alphanumeric, /, -, _ characters"
         ((errors++))
     fi
@@ -145,7 +144,7 @@ validate_config() {
 }
 
 acquire_lock() {
-    local lockfile="/var/lock/cs2-update.lock"
+    local lockfile="/var/lock/csgo-update.lock"
 
     # Create lock directory if it doesn't exist
     mkdir -p "$(dirname "$lockfile")" 2>/dev/null || true
@@ -153,7 +152,7 @@ acquire_lock() {
     # Try to acquire lock
     exec 200>"$lockfile"
     if ! flock -n 200; then
-        log_error "Another CS2 update instance is already running"
+        log_error "Another CS:GO update instance is already running"
         log_info "Likely cause: Cron job is currently executing (runs every 1-2 minutes)"
         log_info "This is normal behavior during updates. Only remove lock if truly stuck: $lockfile"
         exit 1
@@ -163,7 +162,7 @@ acquire_lock() {
 }
 
 release_lock() {
-    local lockfile="/var/lock/cs2-update.lock"
+    local lockfile="/var/lock/csgo-update.lock"
     flock -u 200 2>/dev/null || true
     rm -f "$lockfile" 2>/dev/null || true
 }
@@ -177,7 +176,7 @@ run_with_live_tail() {
     local cmd=("$@")
     local display_lines=3
     local start_ts=$(date +%s)
-    local log_file="/tmp/cs2-update.$$.$RANDOM.log"
+    local log_file="/tmp/csgo-update.$$.$RANDOM.log"
 
     echo -e "${BOLD}${MAGENTA}${label}${RESET}" >&2
 
@@ -252,7 +251,7 @@ run_with_live_tail() {
             case "$error_code" in
                 0x202)
                     log_error "SteamCMD Error 0x202 - Disk space or filesystem issue"
-                    log_info "• CS2 requires ~60GB for initial installation"
+                    log_info "• CS:GO requires ~60GB for initial installation (CS:GO may be smaller, adjust as needed)"
                     log_info "• After VPK sync, servers only use ~3-8GB each"
                     log_info "• VPK files (~52GB) shared from centralized location"
                     echo "" >&2
@@ -281,7 +280,7 @@ run_with_spinner() {
     local spin=('⠋' '⠙' '⠹' '⠸' '⠼' '⠴' '⠦' '⠧' '⠇' '⠏')
     local i=0
     local start_ts=$(date +%s)
-    local log_file="/tmp/cs2-update.$$.$RANDOM.log"
+    local log_file="/tmp/csgo-update.$$.$RANDOM.log"
 
     "${cmd[@]}" >"$log_file" 2>&1 &
     local pid=$!
@@ -424,8 +423,10 @@ get_local_version() {
     fi
 }
 
-update_cs2() {
-    section "CS2 Update"
+update_csgo() {
+    section "CS:GO Update"
+
+    log_info "Starting SteamCMD update for App ID $APP_ID..."
 
     local version_before=$(get_local_version)
     mkdir -p "$CS2_DIR"
@@ -438,19 +439,19 @@ update_cs2() {
 
     if ! run_with_live_tail "Checking for updates and downloading" \
         "$STEAMCMD_DIR/steamcmd.sh" +force_install_dir "$CS2_DIR" +login anonymous +app_update "$APP_ID" $validate_flag +quit; then
-        log_error "CS2 update failed"
+        log_error "CS:GO update failed"
         exit 1
     fi
 
     local version_after=$(get_local_version)
 
     if [ "$version_before" = "$version_after" ]; then
-        log_ok "CS2 is already up to date (version: $version_after)"
+        log_ok "CS:GO is already up to date (version: $version_after)"
     else
         if [ "$version_before" = "unknown" ]; then
-            log_ok "CS2 installed successfully (version: ${BOLD}$version_after${RESET})"
+            log_ok "CS:GO installed successfully (version: ${BOLD}$version_after${RESET})"
         else
-            log_ok "CS2 updated successfully: $version_before → ${BOLD}$version_after${RESET}"
+            log_ok "CS:GO updated successfully: $version_before → ${BOLD}$version_after${RESET}"
         fi
     fi
 
@@ -464,7 +465,7 @@ update_cs2() {
     chmod -R 755 "$CS2_DIR"
 
     local size=$(du -sh "$CS2_DIR" 2>/dev/null | cut -f1)
-    log_info "CS2 directory size: ${BOLD}$size${RESET}"
+    log_info "CS:GO directory size: ${BOLD}$size${RESET}"
 
     # Return 0 if update happened, 1 if already up to date
     [ "$version_before" != "$version_after" ]
@@ -856,7 +857,7 @@ main() {
         esac
     done
 
-    headline "KitsuneLab CS2 Centralized Update"
+    headline "KitsuneLab CS:GO Centralized Update"
 
     if [ "$SIMULATE_MODE" = "true" ]; then
         log_warn "Running in SIMULATE mode - SteamCMD update will be skipped"
@@ -884,7 +885,7 @@ main() {
     fi
 
     log_ok "Dependencies satisfied"
-    log_info "CS2 Directory: ${BOLD}$CS2_DIR${RESET}"
+    log_info "CS:GO Directory: ${BOLD}$CS2_DIR${RESET}"
     log_info "SteamCMD Directory: ${BOLD}$STEAMCMD_DIR${RESET}"
 
     # Check and apply script updates (with rate limiting)
@@ -892,11 +893,11 @@ main() {
 
     install_or_reinstall_steamcmd || exit 1
 
-    # Update CS2 (SteamCMD checks and downloads if needed)
+    # Update CS:GO (SteamCMD checks and downloads if needed)
     local update_occurred=false
     if [ "$SIMULATE_MODE" = "true" ]; then
         # Simulate mode: skip SteamCMD but act as if update happened
-        section "Simulating CS2 Update"
+        section "Simulating CS:GO Update"
         log_info "Skipping SteamCMD update (simulate mode)"
         log_ok "Simulated update complete - triggering restart logic"
         update_occurred=true

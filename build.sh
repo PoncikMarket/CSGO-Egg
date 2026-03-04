@@ -28,7 +28,7 @@ headline()    {
 }
 
 usage() {
-    echo -e "${BOLD}KitsuneLab CS2 Docker Image Builder${RESET}"
+    echo -e "${BOLD}KitsuneLab CS:GO Docker Image Builder${RESET}"
     echo -e ""
     echo -e "${BOLD}Usage:${RESET}"
     echo -e "    ./build.sh [TAG] [options]"
@@ -94,19 +94,19 @@ if [[ -n "$POSITIONAL_TAG" ]]; then
 fi
 
 # Docker Hub configuration
-DOCKERHUB_IMAGE="sples1/k4ryuu-cs2"
+DOCKERHUB_IMAGE="sples1/k4ryuu-csgo"
 DOCKERHUB_FULL="${DOCKERHUB_IMAGE}:${TAG}"
 
 # GitHub Container Registry configuration
 # Note: GHCR requires lowercase repository names
-GITHUB_REPO="k4ryuu/cs2-egg"
+GITHUB_REPO="k4ryuu/csgo-egg"
 GHCR_IMAGE="ghcr.io/${GITHUB_REPO}"
 GHCR_FULL="${GHCR_IMAGE}:${TAG}"
 
 # Primary build target (Docker Hub image)
 FULL_IMAGE="${DOCKERHUB_FULL}"
 
-headline "KitsuneLab CS2 Docker Image Builder" "Image: ${BOLD}${FULL_IMAGE}${RESET}"
+headline "KitsuneLab CS:GO Docker Image Builder" "Image: ${BOLD}${FULL_IMAGE}${RESET}"
 
 # ---------------------------------------------
 # Pre-flight checks

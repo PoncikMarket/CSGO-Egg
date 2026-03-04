@@ -2,21 +2,21 @@
   "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
   "meta": {
     "version": "PTDL_v2",
-    "update_url": "https://raw.githubusercontent.com/K4ryuu/CS2-Egg/main/pterodactyl/kitsunelab-cs2-egg.json"
+    "update_url": "https://raw.githubusercontent.com/K4ryuu/CS2-Egg/main/pterodactyl/kitsunelab-csgo-egg.json"
   },
   "exported_at": "2026-02-7T15:31:48+02:00",
-  "name": "KitsuneLab CS2 Egg @ K4ryuu",
+  "name": "KitsuneLab CS:GO Egg @ K4ryuu",
   "author": "k4ryuu@icloud.com",
-  "description": "The SteamRT3 Platform image for Pterodactyl CS2 servers is packed with numerous features, designed to simplify server management and reduce hassle.",
+  "description": "The SteamRT3 Platform image for Pterodactyl CS:GO servers is packed with numerous features, designed to simplify server management and reduce hassle.",
   "features": [],
   "docker_images": {
-    "KitsuneLab CS2 - GitHub - Unlimited": "ghcr.io/k4ryuu/cs2-egg:latest",
-    "KitsuneLab CS2 Beta - GitHub - Unlimited": "ghcr.io/k4ryuu/cs2-egg:beta",
-    "KitsuneLab CS2 - DockerHub - Limited": "docker.io/sples1/k4ryuu-cs2:latest",
-    "KitsuneLab CS2 Beta - DockerHub - Limited": "docker.io/sples1/k4ryuu-cs2:beta"
+    "KitsuneLab CSGO - GitHub - Unlimited": "ghcr.io/k4ryuu/csgo-egg:latest",
+    "KitsuneLab CSGO Beta - GitHub - Unlimited": "ghcr.io/k4ryuu/csgo-egg:beta",
+    "KitsuneLab CSGO - DockerHub - Limited": "docker.io/sples1/k4ryuu-csgo:latest",
+    "KitsuneLab CSGO Beta - DockerHub - Limited": "docker.io/sples1/k4ryuu-csgo:beta"
   },
   "file_denylist": [],
-  "startup": "./game/cs2.sh {{CUSTOM_PARAMS}} -dedicated +ip 0.0.0.0 -port {{SERVER_PORT}} +map {{SRCDS_MAP}} -maxplayers {{SRCDS_MAXPLAYERS}} +sv_setsteamaccount {{STEAM_ACC}} +game_type {{GAME_TYPE}} +game_mode {{GAME_MODE}}",
+  "startup": "./srcds_run -game csgo -console -usercon +ip 0.0.0.0 -port {{SERVER_PORT}} +map {{SRCDS_MAP}} -maxplayers_override {{SRCDS_MAXPLAYERS}} +sv_setsteamaccount {{STEAM_ACC}} +game_type {{GAME_TYPE}} +game_mode {{GAME_MODE}} -tickrate {{TICKRATE}} {{CUSTOM_PARAMS}}",
   "config": {
     "files": "{}",
     "startup": "{\r\n    \"done\": \"Source2Init OK\"\r\n}",
@@ -55,7 +55,7 @@
       "name": "Source AppID",
       "description": "NOT VISIBLE TO USERS. DO NOT EDIT.",
       "env_variable": "SRCDS_APPID",
-      "default_value": "730",
+      "default_value": "4465480",
       "user_viewable": false,
       "user_editable": false,
       "rules": "required|numeric",
@@ -143,7 +143,7 @@
     },
     {
       "name": "CounterStrikeSharp",
-      "description": "C# scripting platform for CS2 plugins. Requires MetaMod:Source (auto-enabled). Compatible with SwiftlyS2. Incompatible with ModSharp. Automatically updates on server restart while enabled.",
+      "description": "C# scripting platform for CS:GO plugins. Requires MetaMod:Source (auto-enabled). Compatible with SwiftlyS2. Incompatible with ModSharp. Automatically updates on server restart while enabled.",
       "env_variable": "INSTALL_CSS",
       "default_value": "0",
       "user_viewable": true,
@@ -213,7 +213,7 @@
     },
     {
       "name": "VPK Sync",
-      "description": "Host directory path containing centralized CS2 game files for syncing. Enables VPK symlinking for massive storage savings. Requires Pterodactyl mount configuration (documentation on GitHub). Leave empty to disable.",
+      "description": "Host directory path containing centralized CS:GO game files for syncing. Enables VPK symlinking for massive storage savings. Requires Pterodactyl mount configuration (documentation on GitHub). Leave empty to disable.",
       "env_variable": "SYNC_LOCATION",
       "default_value": "",
       "user_viewable": false,
@@ -229,6 +229,16 @@
       "user_viewable": false,
       "user_editable": false,
       "rules": "nullable|numeric",
+      "field_type": "text"
+    },
+    {
+      "name": "Tickrate",
+      "description": "The tickrate for the server. Higher tickrate means smoother gameplay but requires more CPU power. 128 is recommended for competitive servers.",
+      "env_variable": "TICKRATE",
+      "default_value": "128",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|numeric",
       "field_type": "text"
     }
   ]

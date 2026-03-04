@@ -142,8 +142,8 @@ eval "$START_CMD" | while IFS= read -r line; do
     line="${line%[[:space:]]}"
     [[ "$line" =~ Segmentation\ fault.*"${GAMEEXE}" ]] && continue
 
-    # Detect crash via cs2.sh crash message pattern
-    if [[ "$line" =~ \./game/cs2\.sh:.*Aborted.*\(core\ dumped\) ]]; then
+    # Detect crash via srcds_run crash message pattern
+    if [[ "$line" =~ srcds_run:.*segmentation.*fault ]]; then
         handle_server_output "$line"
 
         log_message "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" "warning"
