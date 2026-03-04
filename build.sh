@@ -99,7 +99,7 @@ DOCKERHUB_FULL="${DOCKERHUB_IMAGE}:${TAG}"
 
 # GitHub Container Registry configuration
 # Note: GHCR requires lowercase repository names
-GITHUB_REPO="k4ryuu/csgo-egg"
+GITHUB_REPO="poncikmarket/csgo-egg"
 GHCR_IMAGE="ghcr.io/${GITHUB_REPO}"
 GHCR_FULL="${GHCR_IMAGE}:${TAG}"
 
